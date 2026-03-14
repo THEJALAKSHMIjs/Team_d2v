@@ -1,0 +1,24 @@
+@if (visible) {
+  <div
+    class="viewer-backdrop"
+    (click)="onBackdropClick($event)"
+    (pointerdown)="onPointerDown($event)"
+    (pointerup)="onPointerUp($event)"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image gallery"
+  >
+    <button type="button" class="viewer-close" (click)="close.emit()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <img
+      [src]="currentImage"
+      [alt]="'Image ' + (currentIndex + 1)"
+      class="viewer-image"
+      draggable="false"
+    />
+    <div class="viewer-counter">{{ counterText }}</div>
+  </div>
+}

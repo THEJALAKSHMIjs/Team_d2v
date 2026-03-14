@@ -1,0 +1,28 @@
+<div class="page">
+  <div class="page-container">
+    @if (title) {
+    <h1 class="page-title">{{ title }}</h1>
+    <div class="gallery">
+      @for (img of images; track img; let i = $index) {
+        <button type="button" class="gallery-item" (click)="openFullscreen(i)">
+          <img [src]="img" [alt]="title + ' image ' + (i + 1)" loading="lazy" />
+        </button>
+      }
+    </div>
+    <a routerLink="/" [queryParams]="propertyKey ? { open: 'stayclub', property: propertyKey } : {}" class="back-btn">
+      Back
+    </a>
+    } @else {
+    <p class="page-message">Property not found.</p>
+    <a routerLink="/" class="back-btn">Back to Home</a>
+    }
+  </div>
+</div>
+
+<app-fullscreen-viewer
+  [images]="images"
+  [currentIndex]="fullscreenIndex"
+  [visible]="fullscreenVisible"
+  (close)="closeFullscreen()"
+  (indexChange)="onFullscreenIndexChange($event)"
+/>

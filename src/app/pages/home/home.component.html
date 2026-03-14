@@ -1,0 +1,105 @@
+<section class="hero" [style.backgroundImage]="'url(' + bgImage + ')'" (click)="onHeroClick($event)">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Welcome to Team D2V</h1>
+    <p class="hero-subtitle">Staycations &amp; Hotels — Discover your next stay</p>
+    <div class="hero-buttons">
+      <button
+        type="button"
+        class="hero-btn"
+        [class.hero-btn--active]="activeTab === 'stayclub'"
+        (click)="openStayClub()"
+      >
+        StayClub Staycations
+      </button>
+      <button
+        type="button"
+        class="hero-btn"
+        [class.hero-btn--active]="activeTab === 'hotel'"
+        (click)="openHotels()"
+      >
+        Hotels
+      </button>
+    </div>
+
+    @if (activeTab) {
+      <div id="accordion-section" class="accordion-section">
+        @if (activeTab === 'stayclub') {
+          <div class="accordion">
+            <details class="accordion-item" id="accordion-city">
+              <summary class="accordion-summary">City</summary>
+              <div class="accordion-body">
+                <details class="accordion-item accordion-item--nested" id="accordion-kochi-props">
+                  <summary class="accordion-summary accordion-summary--sub">Properties in Kochi</summary>
+                  <div class="accordion-actions">
+                    @for (p of kochiProps; track p.key) {
+                      <button type="button" class="accordion-btn" [class.accordion-btn--active]="selectedProperty === p.key" (click)="openProperty(p)">
+                        {{ p.title }}
+                      </button>
+                    }
+                  </div>
+                </details>
+              </div>
+            </details>
+            <details class="accordion-item" id="accordion-hill">
+              <summary class="accordion-summary">Hill Stations</summary>
+              <div class="accordion-body">
+                <details class="accordion-item accordion-item--nested" id="accordion-ooty-props">
+                  <summary class="accordion-summary accordion-summary--sub">Properties in Ooty</summary>
+                  <div class="accordion-actions">
+                    @for (p of ootyProps; track p.key) {
+                      <button type="button" class="accordion-btn" [class.accordion-btn--active]="selectedProperty === p.key" (click)="openProperty(p)">
+                        {{ p.title }}
+                      </button>
+                    }
+                  </div>
+                </details>
+                <details class="accordion-item accordion-item--nested" id="accordion-munnar-props">
+                  <summary class="accordion-summary accordion-summary--sub">Properties in Munnar</summary>
+                  <div class="accordion-actions">
+                    @for (p of munnarProps; track p.key) {
+                      <button type="button" class="accordion-btn" [class.accordion-btn--active]="selectedProperty === p.key" (click)="openProperty(p)">
+                        {{ p.title }}
+                      </button>
+                    }
+                  </div>
+                </details>
+              </div>
+            </details>
+          </div>
+        }
+
+        @if (activeTab === 'hotel') {
+          <div class="accordion">
+            <details class="accordion-item" id="accordion-thrissur">
+              <summary class="accordion-summary">Hotels in Thrissur</summary>
+              <div class="accordion-body">
+                <div class="accordion-actions">
+                  @for (h of thrissurHotels; track h.key) {
+                    <button type="button" class="accordion-btn" [class.accordion-btn--active]="selectedHotel === h.key" (click)="openHotel(h)">
+                      {{ h.title }}
+                    </button>
+                  }
+                </div>
+              </div>
+            </details>
+            <details class="accordion-item" id="accordion-kochi-hotels">
+              <summary class="accordion-summary">Hotels in Kochi</summary>
+              <div class="accordion-body">
+                <div class="accordion-actions">
+                  @for (h of kochiHotels; track h.key) {
+                    <button type="button" class="accordion-btn" [class.accordion-btn--active]="selectedHotel === h.key" (click)="openHotel(h)">
+                      {{ h.title }}
+                    </button>
+                  }
+                </div>
+              </div>
+            </details>
+          </div>
+        }
+
+        <button type="button" class="accordion-close" (click)="clearTab()">Close</button>
+      </div>
+    }
+  </div>
+</section>

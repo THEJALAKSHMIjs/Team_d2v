@@ -1,0 +1,43 @@
+<div class="page">
+  <div class="page-container">
+    @if (title) {
+    <h1 class="page-title">{{ title }}</h1>
+
+    @if (categories.length > 0) {
+      @for (cat of categories; track cat.key) {
+        <h2 class="category-title">{{ cat.label }}</h2>
+        <div class="gallery">
+          @for (img of cat.images; track img; let i = $index) {
+            <button type="button" class="gallery-item" (click)="openFullscreen(cat.images, i)">
+              <img [src]="img" [alt]="title + ' ' + cat.label + ' image ' + (i + 1)" loading="lazy" />
+            </button>
+          }
+        </div>
+      }
+    } @else {
+      <div class="gallery">
+        @for (img of flatImages; track img; let i = $index) {
+          <button type="button" class="gallery-item" (click)="openFullscreen(flatImages, i)">
+            <img [src]="img" [alt]="title + ' image ' + (i + 1)" loading="lazy" />
+          </button>
+        }
+      </div>
+    }
+
+    <a routerLink="/" [queryParams]="hotelKey ? { open: 'hotel', hotel: hotelKey } : {}" class="back-btn">
+      Back
+    </a>
+    } @else {
+    <p class="page-message">Hotel not found.</p>
+    <a routerLink="/" class="back-btn">Back to Home</a>
+    }
+  </div>
+</div>
+
+<app-fullscreen-viewer
+  [images]="flatImages"
+  [currentIndex]="fullscreenIndex"
+  [visible]="fullscreenVisible"
+  (close)="closeFullscreen()"
+  (indexChange)="onFullscreenIndexChange($event)"
+/>
